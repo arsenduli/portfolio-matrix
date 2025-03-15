@@ -10,11 +10,10 @@ import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import MouseFollower from '@/components/MouseFollower';
 
 // Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger);
 
 const Index = () => {
   const smoothWrapperRef = useRef<HTMLDivElement>(null);
@@ -23,15 +22,6 @@ const Index = () => {
   useEffect(() => {
     // Create smooth scrolling effect
     if (smoothWrapperRef.current && smoothContentRef.current) {
-      const smoother = ScrollSmoother.create({
-        smooth: 1,
-        effects: true,
-        normalizeScroll: true,
-        smoothTouch: 0.1,
-        wrapper: smoothWrapperRef.current,
-        content: smoothContentRef.current
-      });
-
       // Initial loading animation
       const tl = gsap.timeline();
       
@@ -66,7 +56,6 @@ const Index = () => {
       // Return cleanup function
       return () => {
         tl.kill();
-        smoother.kill();
         ScrollTrigger.getAll().forEach(t => t.kill());
       };
     }

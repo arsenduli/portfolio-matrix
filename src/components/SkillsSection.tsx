@@ -91,7 +91,7 @@ const SkillsSection = () => {
       });
       
       // Add 3D tilt effect on hover
-      card.addEventListener('mousemove', (e) => {
+      card.addEventListener('mousemove', (e: MouseEvent) => {
         const rect = (card as HTMLElement).getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
