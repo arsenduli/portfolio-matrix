@@ -33,12 +33,15 @@ const HeroSection = () => {
     const splitTagline = new SplitText(tagline, { type: "chars,words" });
     
     // Set initial states
-    gsap.set([splitHeading.chars, splitTagline.chars, cta], { opacity: 0 });
+    gsap.set([splitHeading.chars, splitTagline.chars, cta], { opacity: 0, y: 50 });
     gsap.set(logo, { scale: 0, rotation: -5 });
     gsap.set(circles.querySelectorAll('.circle'), { scale: 0, opacity: 0 });
     
     // Get circle elements
     const circleEls = circles.querySelectorAll('.circle');
+    
+    // Make sure elements are visible before animation starts
+    gsap.set([heading, tagline, cta], { visibility: "visible" });
     
     // Main timeline
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -70,6 +73,7 @@ const HeroSection = () => {
     // Animate tagline
     .to(splitTagline.chars, { 
       opacity: 1, 
+      y: 0,
       duration: 0.01, 
       stagger: 0.01
     }, "-=0.1")
@@ -93,11 +97,50 @@ const HeroSection = () => {
       stagger: 0.1
     });
 
+    // Add magnetic effect to buttons
+    const interactiveElements = document.querySelectorAll('.interactive');
+    interactiveElements.forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        if (el instanceof HTMLElement) {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          
+          gsap.to(el, {
+            x: x * 0.2,
+            y: y * 0.2,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        }
+      });
+      
+      el.addEventListener('mouseleave', () => {
+        if (el instanceof HTMLElement) {
+          gsap.to(el, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: "elastic.out(1, 0.3)"
+          });
+        }
+      });
+    });
+
     // Clean up
     return () => {
       tl.kill();
-      splitHeading.revert();
-      splitTagline.revert();
+      if (splitHeading && typeof splitHeading.revert === 'function') {
+        splitHeading.revert();
+      }
+      if (splitTagline && typeof splitTagline.revert === 'function') {
+        splitTagline.revert();
+      }
+      
+      interactiveElements.forEach(el => {
+        el.removeEventListener('mousemove', () => {});
+        el.removeEventListener('mouseleave', () => {});
+      });
     };
   }, []);
 
@@ -126,6 +169,7 @@ const HeroSection = () => {
         <h1
           ref={headingRef}
           className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 reveal-item"
+          style={{ visibility: "hidden" }} // Initially hidden, will be revealed by GSAP
         >
           Hi, I'm <span className="text-gradient">Arsen Duli</span>
           <br />
@@ -135,12 +179,17 @@ const HeroSection = () => {
         <p
           ref={taglineRef}
           className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto reveal-item"
+          style={{ visibility: "hidden" }} // Initially hidden, will be revealed by GSAP
         >
           From vision to code – I craft high-performance, modern websites
           <br className="hidden md:block" /> that redefine digital experiences.
         </p>
 
-        <div ref={ctaRef} className="flex flex-col sm:flex-row justify-center gap-4 items-center reveal-item">
+        <div 
+          ref={ctaRef} 
+          className="flex flex-col sm:flex-row justify-center gap-4 items-center reveal-item"
+          style={{ visibility: "hidden" }} // Initially hidden, will be revealed by GSAP
+        >
           <Button
             size="lg"
             className="bg-portfolio-purple hover:bg-portfolio-purple/90 text-white px-8 py-6 interactive"
