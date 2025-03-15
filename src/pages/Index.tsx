@@ -17,52 +17,59 @@ import MouseFollower from '@/components/MouseFollower';
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 const Index = () => {
-  const smoothWrapperRef = useRef(null);
-  const smoothContentRef = useRef(null);
+  const smoothWrapperRef = useRef<HTMLDivElement>(null);
+  const smoothContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Create smooth scrolling effect
-    const smoother = ScrollSmoother.create({
-      smooth: 1,
-      effects: true,
-      normalizeScroll: true,
-      smoothTouch: 0.1,
-      wrapper: smoothWrapperRef.current,
-      content: smoothContentRef.current
-    });
-
-    // Initial loading animation
-    const tl = gsap.timeline();
-    
-    // Add page reveal animation
-    tl.to('body', { opacity: 1, duration: 0.2 })
-      .from('.reveal-item', { 
-        y: 100, 
-        opacity: 0, 
-        stagger: 0.1, 
-        duration: 0.8, 
-        ease: "power3.out" 
-      }, 0.2);
-    
-    // Parallax effect for decorative elements
-    gsap.utils.toArray('.parallax').forEach(element => {
-      gsap.to(element, {
-        y: () => -100,
-        scrollTrigger: {
-          trigger: element,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true
-        }
+    if (smoothWrapperRef.current && smoothContentRef.current) {
+      const smoother = ScrollSmoother.create({
+        smooth: 1,
+        effects: true,
+        normalizeScroll: true,
+        smoothTouch: 0.1,
+        wrapper: smoothWrapperRef.current,
+        content: smoothContentRef.current
       });
-    });
-    
-    // Return cleanup function
-    return () => {
-      tl.kill();
-      smoother.kill();
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
+
+      // Initial loading animation
+      const tl = gsap.timeline();
+      
+      // Add page reveal animation
+      tl.to('body', { opacity: 1, duration: 0.2 })
+        .from('.reveal-item', { 
+          y: 100, 
+          opacity: 0, 
+          stagger: 0.1, 
+          duration: 0.8, 
+          ease: "power3.out" 
+        }, 0.2);
+      
+      // Parallax effect for decorative elements
+      const parallaxElements = gsap.utils.toArray('.parallax');
+      if (parallaxElements.length > 0) {
+        parallaxElements.forEach((element) => {
+          if (element instanceof Element) {
+            gsap.to(element, {
+              y: () => -100,
+              scrollTrigger: {
+                trigger: element,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true
+              }
+            });
+          }
+        });
+      }
+      
+      // Return cleanup function
+      return () => {
+        tl.kill();
+        smoother.kill();
+        ScrollTrigger.getAll().forEach(t => t.kill());
+      };
+    }
   }, []);
 
   return (

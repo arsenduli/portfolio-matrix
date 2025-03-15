@@ -78,6 +78,83 @@ const SkillsSection = () => {
         duration: 0.4,
         stagger: 0.1
       }, '-=0.2');
+      
+    // Add hover animations for skill cards
+    Array.from(cards.children).forEach((card) => {
+      // Floating animation
+      gsap.to(card, {
+        y: "random(-5, 5)",
+        duration: "random(2, 4)",
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+      
+      // Add 3D tilt effect on hover
+      card.addEventListener('mousemove', (e) => {
+        const rect = (card as HTMLElement).getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const xPercent = (x / rect.width - 0.5) * 2;  // -1 to 1
+        const yPercent = (y / rect.height - 0.5) * 2; // -1 to 1
+        
+        gsap.to(card, {
+          rotationY: xPercent * 5, // Rotate based on mouse x position
+          rotationX: yPercent * -5, // Rotate based on mouse y position
+          transformPerspective: 500,
+          duration: 0.5,
+          ease: "power1.out"
+        });
+        
+        // Highlight effect
+        gsap.to(card.querySelector('.card-highlight'), {
+          opacity: 0.8,
+          x: x,
+          y: y,
+          duration: 0.3
+        });
+      });
+      
+      // Reset on mouse leave
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotationY: 0,
+          rotationX: 0,
+          duration: 0.5,
+          ease: "power1.out"
+        });
+        
+        gsap.to(card.querySelector('.card-highlight'), {
+          opacity: 0,
+          duration: 0.3
+        });
+      });
+    });
+
+    // Animate skill tags on hover
+    const skillTags = document.querySelectorAll('.skill-tag');
+    skillTags.forEach(tag => {
+      tag.classList.add('magnetic');
+      
+      tag.addEventListener('mouseenter', () => {
+        gsap.to(tag, {
+          scale: 1.1,
+          backgroundColor: 'rgba(155, 135, 245, 0.3)',
+          color: '#ffffff',
+          duration: 0.3
+        });
+      });
+      
+      tag.addEventListener('mouseleave', () => {
+        gsap.to(tag, {
+          scale: 1,
+          backgroundColor: 'rgba(155, 135, 245, 0.1)',
+          color: 'rgba(255, 255, 255, 0.8)',
+          duration: 0.3
+        });
+      });
+    });
 
     return () => {
       tl.kill();
@@ -103,17 +180,20 @@ const SkillsSection = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {skillCategories.map((category, index) => (
-            <div key={index} className="glass-panel p-6 card-hover">
-              <div className="flex items-center gap-4 mb-4">
-                {category.icon}
-                <h3 className="text-xl font-semibold">{category.name}</h3>
-              </div>
-              <div className="flex flex-wrap gap-2 mt-4">
-                {category.skills.map((skill, idx) => (
-                  <span key={idx} className="skill-tag">
-                    {skill}
-                  </span>
-                ))}
+            <div key={index} className="glass-panel p-6 card-hover relative overflow-hidden">
+              <div className="card-highlight absolute w-40 h-40 rounded-full bg-portfolio-purple/20 blur-xl pointer-events-none opacity-0"></div>
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="magnetic">{category.icon}</div>
+                  <h3 className="text-xl font-semibold">{category.name}</h3>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {category.skills.map((skill, idx) => (
+                    <span key={idx} className="skill-tag">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
