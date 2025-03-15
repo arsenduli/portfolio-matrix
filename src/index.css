@@ -46,15 +46,65 @@
 
   html {
     @apply scroll-smooth;
+    cursor: none;
   }
 
   body {
     @apply bg-portfolio-dark text-foreground font-sans;
     overflow-x: hidden;
+    opacity: 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
+  }
+  
+  /* Custom cursor styles */
+  .cursor {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: difference;
+  }
+  
+  .cursor-follower {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(155, 135, 245, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease;
+  }
+  
+  .cursor-hover .cursor {
+    transform: scale(1.5);
+    background-color: rgb(155, 135, 245);
+  }
+  
+  .cursor-hover .cursor-follower {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(155, 135, 245, 0.1);
+    border-color: rgba(155, 135, 245, 0.8);
+    transform: translate(-30%, -30%);
+  }
+  
+  /* Hide cursor on mobile */
+  @media (max-width: 768px) {
+    .cursor, .cursor-follower {
+      display: none;
+    }
+    
+    html {
+      cursor: auto;
+    }
   }
 }
 
@@ -105,5 +155,56 @@
 
   .glass-panel {
     @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl;
+  }
+  
+  /* Animation utilities */
+  .reveal-item {
+    visibility: hidden;
+  }
+  
+  .char, .word, .line {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  
+  .char {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Floating animation */
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+  
+  /* Glowing effect */
+  .glow {
+    box-shadow: 0 0 15px 2px rgba(155, 135, 245, 0.5);
+  }
+  
+  .glow-text {
+    text-shadow: 0 0 8px rgba(155, 135, 245, 0.5);
+  }
+  
+  /* Interactive elements styles */
+  .interactive {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .interactive:hover {
+    transform: translateY(-2px);
   }
 }
