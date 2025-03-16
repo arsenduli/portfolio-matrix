@@ -51,7 +51,6 @@ const HeroSection = () => {
           className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
         >
           Hi, I'm <span className="text-gradient">Arsen Duli</span>
-          Hi, I'm <span className="text-gradient">Arsen Duli</span>
           <br />
           <BlurText
             text="Full Stack Web Developer"
@@ -65,8 +64,6 @@ const HeroSection = () => {
           ref={taglineRef}
           className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto"
         >
-          From vision to code – I craft high-performance, modern websites
-          <br className="hidden md:block" /> that redefine digital experiences.
           From vision to code – I craft high-performance, modern websites
           <br className="hidden md:block" /> that redefine digital experiences.
         </p>
