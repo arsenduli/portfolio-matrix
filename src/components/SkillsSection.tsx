@@ -86,7 +86,7 @@ const SkillsSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="skills" className="py-24 relative">
+    <section ref={sectionRef} id="skills" className=" relative">
       <div className="blur-circle w-[400px] h-[400px] bg-portfolio-purple/10 top-20 right-20"></div>
       
       <div className="section-container">

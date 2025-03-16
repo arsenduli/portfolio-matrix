@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <Link to="/" className="text-2xl font-bold text-gradient">
-              Arsen<span className="text-white">.</span>
+                <img className='w-[180px]' src='/logo_duli.png'/>
             </Link>
             <p className="text-muted-foreground mt-2 max-w-md">
               Building high-performance, modern websites that redefine digital experiences.

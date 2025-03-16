@@ -41,7 +41,7 @@ const AboutSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="py-24 relative">
+    <section ref={sectionRef} id="about" className=" relative">
       <div className="blur-circle w-[400px] h-[400px] bg-portfolio-purple/10 -bottom-20 -left-20"></div>
 
       <div className="section-container">

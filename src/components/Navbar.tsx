@@ -23,18 +23,18 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 z-[1050] ${
         isScrolled ? 'py-3 bg-portfolio-dark/80 backdrop-blur-md' : 'py-5 bg-transparent'
       }`}
     >
       <div className="container flex items-center justify-between">
         <Link to="/" className="text-2xl font-bold text-gradient">
-          Arsen<span className="text-white">.</span>
+          <img className='w-[220px]' src='/logo_duli.png'/>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          <Link to="/#about" className="nav-link">
+          <Link to="#about" className="nav-link">
             About
           </Link>
           <Link to="/#skills" className="nav-link">
@@ -66,7 +66,7 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed top-16 left-0 w-full h-[calc(100vh-4rem)] bg-portfolio-dark/95 backdrop-blur-md p-6 flex flex-col space-y-6 animate-fade-in">
+        <div className="md:hidden fixed top-[5rem] left-0 w-full h-[calc(100vh-4rem)] bg-portfolio-dark/95 backdrop-blur-md p-6 flex flex-col space-y-6 animate-fade-in">
           <Link
             to="/#about"
             className="text-xl py-2 border-b border-gray-800"

@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { MoveBorder } from './ui/moving-border';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -84,7 +85,7 @@ const BlogSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="blog" className="py-24 relative">
+    <section ref={sectionRef} id="blog" className=" relative">
       <div className="blur-circle w-[300px] h-[300px] bg-portfolio-purple/10 top-20 left-20"></div>
       
       <div className="section-container">
@@ -98,8 +99,8 @@ const BlogSection = () => {
 
         <div ref={postsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post, index) => (
-            <Card key={index} className="bg-card/50 backdrop-blur-sm border-portfolio-purple/20 overflow-hidden card-hover">
-              <div className="relative h-48 overflow-hidden">
+            <MoveBorder key={index}>
+              <div className="relative h-48 overflow-hidden w-full rounded-[29px_29px_0px_0px]">
                 <img 
                   src={post.image} 
                   alt={post.title} 
@@ -109,7 +110,7 @@ const BlogSection = () => {
                   {post.category}
                 </div>
               </div>
-              <CardContent className="p-6">
+              <CardContent className="p-6 text-left">
                 <div className="text-muted-foreground text-sm mb-2">{post.date}</div>
                 <h3 className="text-xl font-bold mb-2">{post.title}</h3>
                 <p className="text-muted-foreground mb-4 text-sm">{post.excerpt}</p>
@@ -119,7 +120,7 @@ const BlogSection = () => {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </CardContent>
-            </Card>
+            </MoveBorder>
           ))}
         </div>
 

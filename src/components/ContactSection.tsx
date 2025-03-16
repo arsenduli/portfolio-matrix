@@ -78,7 +78,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section ref={sectionRef} id="contact" className="py-24 relative">
+    <section ref={sectionRef} id="contact" className=" relative">
       <div className="blur-circle w-[400px] h-[400px] bg-portfolio-purple/10 bottom-0 right-0"></div>
       
       <div className="section-container">

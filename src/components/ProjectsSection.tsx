@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ExternalLink, Github } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { MoveBorder } from './ui/moving-border';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,7 +42,7 @@ const ProjectsSection = () => {
     },
     {
       title: "Blog & Content Platform",
-      description: "A fast-loading, SEO-optimized content platform built with Next.js and a headless CMS, achieving a 98/100 PageSpeed score.",
+      description: "A fast-loading, SEO-optimized content platform built with Next.js and a headless CMS, achieving a 98/100 PageSpeed score and best seo what the website what have.",
       image: "https://placehold.co/600x400/0A0F1C/9b87f5?text=Blog+Platform",
       technologies: ["Next.js", "React", "TailwindCSS", "Headless CMS"],
       demoUrl: "#",
@@ -83,7 +84,8 @@ const ProjectsSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="projects" className="py-24 relative">
+    <section ref={sectionRef} id="projects" className=" relative">
+      
       <div className="blur-circle w-[350px] h-[350px] bg-portfolio-purple/15 bottom-0 left-20"></div>
       
       <div className="section-container">
@@ -97,15 +99,15 @@ const ProjectsSection = () => {
 
         <div ref={projectsRef} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <Card key={index} className="bg-card/50 backdrop-blur-sm border-portfolio-purple/20 overflow-hidden card-hover">
-              <div className="relative h-48 overflow-hidden">
+            <MoveBorder key={index} >
+              <div className="relative h-48 overflow-hidden w-full rounded-[29px_29px_0px_0px]">
                 <img 
                   src={project.image} 
                   alt={project.title} 
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                 />
               </div>
-              <CardContent className="p-6">
+              <CardContent className="p-6 text-left">
                 <h3 className="text-xl font-bold mb-2">{project.title}</h3>
                 <p className="text-muted-foreground mb-4 text-sm">{project.description}</p>
                 
@@ -130,7 +132,7 @@ const ProjectsSection = () => {
                   )}
                 </div>
               </CardContent>
-            </Card>
+            </MoveBorder>
           ))}
         </div>
 
